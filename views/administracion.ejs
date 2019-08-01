@@ -1,0 +1,114 @@
+<main class="contenedor panel-administracion">
+    <h1><%= nombrePagina%></h1>
+    <div class="contenedor-botones barra-nav">
+        <a href="/nuevo-grupo" class="">Nuevo Grupo</a>
+        <a href="/nuevo-meeti" class="">Nuevo Meeti</a>
+        <a href="/editar-perfil" class="">Editar Perfil</a>
+        <a href="/cambiar-password" class="">Cambiar Password</a>
+        <a href="/imagen-perfil" class="">Imagen Perfil</a>
+    </div>
+    <div class="seccion-admin">
+        <%if (meeti.length > 0) {%>
+        <h2>Proximos Meeti's</h2>
+<!--        <table class="table table-hover table-striped table-bordered table-responsive">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th scope="col">Titulo</th>-->
+<!--                <th scope="col">Interesados</th>-->
+<!--                <th scope="col">Fecha</th>-->
+<!--                <th scope="col">Asistente</th>-->
+<!--                <th scope="col">Acciones</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <%meeti.forEach(meet => {%>-->
+<!--            <tr>-->
+
+<!--                <td scope="row"><%= meet.titulo%></td>-->
+<!--                <td><%= meet.interesados.length%> </td>-->
+<!--                    <% const fecha = meet.fecha +' '+meet.hora%>-->
+<!--                <td class="fecha"><%= moment(fecha).format('LLLL');%> Horas</td>-->
+<!--                <td>Asistente</td>-->
+<!--                <td>-->
+<!--                    <a href="/editar-meeti/<%=meet.id%>" class="btn btn-editar"><i class="fa fa-edit"></i></a>-->
+<!--                    <a href="/eliminar-meeti/<%=meet.id%>" class="btn btn-rojo"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
+<!--                </td>-->
+<!--                <td></td>-->
+
+<!--            </tr>-->
+<!--            <%})%>-->
+<!--            </tbody>-->
+<!--        </table>-->
+        <ul>
+            <%meeti.forEach(meet => {%>
+            <li>
+                <div class="informacion-admin">
+                    <%moment.locale('es');%>
+                    <% const fecha = meet.fecha +' '+meet.hora%>
+                    <p class="fecha"><%= moment(fecha).format('LLLL');%> Horas</p>
+                    <a href="/meeti/<%=meet.slug%>" target="_blank">
+                        <h3><%=meet.titulo%></h3>
+                    </a>
+                    <small><%= meet.interesados.length%> Interesados</small>
+                </div>
+                <div class="acciones contenedor-botones">
+                    <a href="/editar-meeti/<%=meet.id%>" class="btn btn-verde">Editar</a>
+                    <a href="/asistentes/<%= meet.slug%>" class="btn btn-azul2">Asistente</a>
+                    <a href="/eliminar-meeti/<%=meet.id%>" class="btn btn-rojo">Eliminar</a>
+                </div>
+            </li>
+            <%})%>
+        </ul>
+        <%}else {%>
+            <p>Aun no tienes meeti creados</p>
+            <%}%>
+    </div>
+    <div class="seccion-admin">
+        <h2>Tus Grupos</h2>
+        <%if (grupos.length){%>
+        <ul>
+            <% grupos.forEach(grupo => {%>
+            <li>
+                <div class="informacion-admin">
+                    <h3><%= grupo.nombre%></h3>
+                </div>
+                <div class="acciones contenedor-botones">
+                    <a href="/editar-grupo/<%=grupo.id%>" class="btn btn-verde">Editar</a>
+                    <a href="/imagen-grupo/<%=grupo.id%>" class="btn btn-azul2">Imagen</a>
+                    <a href="/eliminar-grupo/<%=grupo.id%>" class="btn btn-rojo">Eliminar</a>
+                </div>
+            </li>
+           <%})%>
+        </ul>
+        <%} else {%>
+            <p>No tienes grupos creados</p>
+        <%}%>
+    </div>
+
+
+    <div class="seccion-admin">
+        <%if (anteriores.length > 0) {%>
+        <h2>Meeti's Anteriores</h2>
+        <ul>
+            <%anteriores.forEach(meet => {%>
+            <li>
+                <div class="informacion-admin">
+                    <%moment.locale('es');%>
+                    <% const fecha = meet.fecha +' '+meet.hora%>
+                    <p class="fecha"><%= moment(fecha).format('LLLL');%> Horas</p>
+                    <h3><%=meet.titulo%></h3>
+                    <small><%=meet.interesados.length%> Interesados</small>
+                </div>
+                <div class="acciones contenedor-botones">
+                    <a href="/editar-meeti/<%=meet.id%>" class="btn btn-verde">Editar</a>
+                    <a href="/asistente-meeti/<%=meet.id%>" class="btn btn-azul2">Asistente</a>
+                    <a href="/eliminar-meeti/<%=meet.id%>" class="btn btn-rojo">Eliminar</a>
+                </div>
+            </li>
+            <%})%>
+        </ul>
+        <%}else {%>
+            <p>No hay Meeti's Anteriores</p>
+        <%}%>
+    </div>
+</main>

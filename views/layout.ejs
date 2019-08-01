@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Meeti - <%- nombrePagina %></title>
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700,900|Staatliches&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.css"
+          integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
+          crossorigin="">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/css/trix.css">
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+ <header class="site-header contenedor">
+<!--     apunta a la pagina principal-->
+     <a href="/">
+         <img src="/img/logo.png" alt="Logo Meeti">
+     </a>
+     <nav class="nav">
+         <%if(locals.usuario.id){%>
+             <%- include partials/nav-autenticado.ejs%>
+         <%}else {%>
+                 <%- include partials/nav-no-autenticado.ejs%>
+         <%}%>
+     </nav>
+ </header>
+<!--  para poder mostrar el contenido de las vistas-->
+<!-- mostrando los errores-->
+
+ <% if(locals.mensajes){%>
+     <% const categoria = Object.keys(locals.mensajes);%>
+     <% if (categoria.length){ %>
+        <%locals.mensajes[categoria].forEach(alerta=> {%>
+            <div class="alertas">
+                <p class="alerta <%=categoria%>"><%=alerta%></p>
+            </div>
+        <%})%>
+     <%}%>
+ <% }%>
+  <%- body %>
+
+ <footer class="site-footer contenedor">
+     <nav class="nav">
+         <a href="/nuevo-grupo">Crear Grupo</a>
+         <a href="/iniciar-sesion">Iniciar Sesion</a>
+         <a href="/crear-cuenta">Registrarse</a>
+     </nav>
+     <p class="copyright">
+         Todos los derechos reservados Meeti <%- year %> &copy;
+     </p>
+ </footer>
+ <script src="/js/trix.js"></script>
+ <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+         integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+         crossorigin=""></script>
+ <!-- Load Esri Leaflet from CDN -->
+ <script src="https://unpkg.com/esri-leaflet@2.2.4/dist/esri-leaflet.js"
+         integrity="sha512-tyPum7h2h36X52O2gz+Pe8z/3l+Y9S1yEUscbVs5r5aEY5dFmP1WWRY/WLLElnFHa+k1JBQZSCDGwEAnm2IxAQ=="
+         crossorigin=""></script>
+ <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
+         integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
+         crossorigin=""></script>
+ <% if (usuario.id) {%>
+    <script src="/dist/bundle.js"></script>
+<%}%>
+ <script src="/js/meeti.js"></script>
+</body>
+</html>
